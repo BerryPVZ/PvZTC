@@ -1067,8 +1067,8 @@ var CZombies = function(b, a) {
         }(),
         Produce: '只出现于常青之塔101层。僵尸设计来自rdrz。<p>韧性：<font color="#FF0000">高</font></p>舞狮是优秀的民间艺术。每逢佳节庆典，民间都以舞狮来助兴，南方以广东的舞狮表演最为有名。狮子是由彩布条制作而成的。每头狮子有两个人合作表演，一人舞头，一人舞尾。表演者在锣鼓音乐下，装扮成狮子的样子，做出狮子的各种形态动作。在表演过程中，舞狮者要以各种招式来表现南派武功，非常富有阳刚之气。'
     }),
-    oChickenJockey = InheritO(OrnNoneZombies, {
-        EName: "oChickenJockey",
+    oTurkeyJockey = InheritO(OrnNoneZombies, {
+        EName: "oTurkeyJockey",
         CName: "普通僵尸",
         StandGif: 9,
         PicArr: function() {

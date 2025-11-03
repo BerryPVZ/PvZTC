@@ -3018,6 +3018,7 @@ var CPlants = NewO({
             }, [a, b])
         }
     }),
+
     oSeaShroom = InheritO(oPuffShroom, {
         EName: "oSeaShroom",
         CName: "海蘑菇",
@@ -12037,6 +12038,148 @@ return c && c.EName == "oChomper"
 		},
 		BirthStyle: function (c, d, b, a) {
 			b.childNodes[1].src = "images/Plants/TangleKlep/Float.gif";
+			EditEle(
+				b,
+				{
+					id: d,
+				},
+				a,
+				EDPZ
+			);
+		},
+		getHurt: function (d, b, a) {
+			var c = this;
+			b == 3
+				? (c.HP -= a) < 1 && c.Die()
+				: ((c.canTrigger = 0), c.NormalAttack(c, d));
+		},
+		TriggerCheck: function (b, a) {
+			b.AttackedLX < GetX(9) &&
+				b.beAttacked &&
+				((this.canTrigger = 0), this.NormalAttack(this, b));
+		},
+		NormalAttack: function (a, b) {
+			a.getHurt = function () {};
+			b.getHurt = function () {};
+			b.beAttacked = 0;
+			b.isAttacking = 1;
+			NewImg(
+				0,
+				"images/Plants/TangleKlep/Grab.png",
+				"left:" +
+					b.beAttackedPointL +
+					"px;top:" +
+					(b.height - 67) +
+					"px",
+				b.Ele
+			);
+			oSym.addTask(
+				50,
+				function (g, h) {
+					PlayAudio("TangleKlep");
+					var e = g.id,
+						f = h.id,
+						d = e + "_splash",
+						c = f + "_splash";
+					NewEle(
+						d,
+						"div",
+						"position:absolute;background:url(images/interface/splash.png);left:" +
+							(g.pixelLeft - 4) +
+							"px;top:" +
+							(g.pixelTop - 16) +
+							"px;width:97px;height:88px;over-flow:hidden",
+						0,
+						EDPZ
+					);
+					NewEle(
+						c,
+						"div",
+						"position:absolute;background:url(images/interface/splash.png);left:" +
+							(h.AttackedLX - 10) +
+							"px;top:" +
+							(h.pixelTop + h.height - 88) +
+							"px;width:97px;height:88px;over-flow:hidden",
+						0,
+						EDPZ
+					);
+					ImgSpriter(
+						d,
+						e,
+						[
+							["0 0", 9, 1],
+							["-97px 0", 9, 2],
+							["-194px 0", 9, 3],
+							["-291px 0", 9, 4],
+							["-388px 0", 9, 5],
+							["-485px 0", 9, 6],
+							["-582px 0", 9, 7],
+							["-679px 0", 9, -1],
+						],
+						0,
+						function (i, j) {
+							ClearChild($(i));
+						}
+					);
+					ImgSpriter(
+						c,
+						f,
+						[
+							["0 0", 9, 1],
+							["-97px 0", 9, 2],
+							["-194px 0", 9, 3],
+							["-291px 0", 9, 4],
+							["-388px 0", 9, 5],
+							["-485px 0", 9, 6],
+							["-582px 0", 9, 7],
+							["-679px 0", 9, -1],
+						],
+						0,
+						function (i, j) {
+							ClearChild($(i));
+						}
+					);
+					h.DisappearDie();
+					g.Die();
+				},
+				[a, b]
+			);
+		},
+	}),
+oLeaves = InheritO(CPlants, {
+		EName: "oLeaves",
+		CName: "Tangle Leaves",
+		width: 90,
+		height: 72,
+		beAttackedPointL: 15,
+		beAttackedPointR: 80,
+		coolTime: 30,
+		SunNum: 25,
+		BookHandBack: 4.9,
+		GetDY: function (b, c, a) {
+			return 5;
+		},
+		NormalGif: 1,
+		AudioArr: ["TangleKlep"],
+		PicArr: [
+			"images/Card/Plants/Leaves.png",
+			"images/Plants/Leaves/0.gif",
+			"images/Plants/Leaves/Float.gif",
+			"images/Plants/Leaves/Grab.png",
+			"images/interface/splash.png",
+		],
+		Tooltip: "plant that pulls a zombie",
+		Produce:
+			'<font color="#28325A">Tangle Kelp are aquatic plants that pull the first zombie that nears them underwater.</font><p>Damage: <font color="#CC241D">massive</font><br>Usage: <font color="#CC241D">single use, on contact</font><br><font color="#0ca1db">Must be planted in water</font></p>"I\'m totally invisible," Tangle Kelp thinks to himself. "I\'ll hide here just below the surface and nobody will see me." His friends tell him they can see him perfectly well, but he\'ll never change.',
+		
+		getShadow: function (a) {
+			return "display:none";
+		},
+		getTriggerRange: function (a, b, c) {
+			return [[b, c, 0]];
+		},
+		BirthStyle: function (c, d, b, a) {
+			b.childNodes[1].src = "images/Plants/Leaves/Float.gif";
 			EditEle(
 				b,
 				{
